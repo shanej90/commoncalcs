@@ -112,35 +112,28 @@ profile_over_time <- function(df, begin_col, end_col, period_start, period_end, 
   ON (df_fn.start_date < DateDf.date)
         AND (df_fn.end_date > DateDf.date) "
     )
-  }
-
-   if(period_breaks == "week"){
+  } else   if(period_breaks == "week"){
   sql_df <- sqldf::sqldf("SELECT *
   FROM DateDf
   LEFT JOIN df_fn
   ON (df_fn.start_date < DateDf.week_end)
         AND (df_fn.end_date > DateDf.week_start) "
     )
-   }
-
-  if(period_breaks == "month"){
+   } else if(period_breaks == "month"){
   sql_df <- sqldf::sqldf("SELECT *
   FROM DateDf
   LEFT JOIN df_fn
   ON (df_fn.start_date < DateDf.month_end)
         AND (df_fn.end_date > DateDf.month_start) "
   )
-  }
-
-  if(period_breaks == "quarter"){
+  } else  if(period_breaks == "quarter"){
     sql_df <- sqldf::sqldf("SELECT *
   FROM DateDf
   LEFT JOIN df_fn
   ON (df_fn.start_date < DateDf.quarter_end)
         AND (df_fn.end_date > DateDf.quarter_start) "
     )
-}
-  if(period_breaks == "year"){
+} else   if(period_breaks == "year"){
     sql_df <- sqldf::sqldf("SELECT *
   FROM DateDf
   LEFT JOIN df_fn
@@ -165,9 +158,7 @@ profile_over_time <- function(df, begin_col, end_col, period_start, period_end, 
       interval = period_breaks
     ) %>%
     dplyr::select(day, day_name, date, ..., start_date, end_date, {{value_col}}, duration, profiled_value, interval)
-}
-
-  if(period_breaks == "week"){
+} else  if(period_breaks == "week"){
     sql_df %>%
     dplyr::mutate(
       duration = (as.numeric(end_date - start_date) + 1) / 7,
@@ -176,9 +167,7 @@ profile_over_time <- function(df, begin_col, end_col, period_start, period_end, 
       interval = period_breaks
     ) %>%
     dplyr::select(year, week, week_start, week_end, ..., start_date, end_date, {{value_col}}, duration, profiled_value, interval)
-}
-
-  if(period_breaks == "month"){
+} else  if(period_breaks == "month"){
     sql_df %>%
     dplyr::mutate(
       duration = lubridate::interval(start_date, end_date) %/% months(1),
@@ -187,9 +176,7 @@ profile_over_time <- function(df, begin_col, end_col, period_start, period_end, 
       interval = period_breaks
     ) %>%
     dplyr::select(year, month, month_start, month_end, ..., start_date, end_date, {{value_col}}, duration, profiled_value, interval)
-}
-
-  if(period_breaks == "quarter"){
+} else  if(period_breaks == "quarter"){
     sql_df %>%
     dplyr::mutate(
       duration = lubridate::interval(start_date, end_date) %/% months(3),
@@ -198,9 +185,7 @@ profile_over_time <- function(df, begin_col, end_col, period_start, period_end, 
       interval = period_breaks
     ) %>%
     dplyr::select(year, quarter, quarter_start, quarter_end, ..., start_date, end_date, {{value_col}}, duration, profiled_value, interval)
-  }
-
-  if(period_breaks == "year"){
+  } else  if(period_breaks == "year"){
     sql_df %>%
     dplyr::mutate(
       duration = lubridate::interval(start_date, end_date) %/% months(12),
