@@ -1,0 +1,38 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# commoncalcs
+
+<!-- badges: start -->
+
+<img src='man/figures/logo.png' align="right" height="139" />
+<!-- badges: end -->
+
+Routine data analysis may involve a series of common calculations
+(commoncalcs, geddit?) that (to my knowledge), lack existing R packages
+written with them in mind. These include calculating percentage growth
+over differing periods of time, or calculating weighted means.
+
+`commoncalcs` aims to resolve these problems. It provides functions that
+can streamline code required to run such calculations, assuming you can
+provide some data in the right format and specify some key variables.
+
+## Installation
+
+You can install the package using RStudio’s tool, or via the following
+code, using the listed file location.
+
+``` r
+devtools::install_github("shanej90/commoncalcs")
+```
+
+## Functionality
+
+`commoncalcs` currently provides three routine functions:
+*`calc_percent_growth()`, which enables you to calculate either absolute
+or averaged per period growth over a user-defined number of periods.
+*`calc_weighted_means()`, which will produce a weighted mean for
+variable groupings of your choice. \*`profile_over_time()`, which will
+profile numbers over a specified period of time. The most obvious use
+case of this is to spread the entire value of a contract over the
+contract’s duration.
