@@ -11,14 +11,14 @@ calc_weighted_mean(data, numerator_col, denominator_col, multiplier = 1, ...)
 
 \item{numerator_col}{Value field that when aggregated will be the numerator in the calculation to work out weighted mean}
 
-\item{denominator_col}{Value field that when aggregated will be the denominator in the calculation to work out a weighted mean}
+\item{denominator_col}{Value field that when aggregated will be the denominator in the calculation to work out a weighted mean.}
 
-\item{multiplier}{A figure to divide your end result by if your prior processing involves counting your denominator multiple times}
+\item{multiplier}{A figure to divide your denominator by if your processing involves counting it multiple times.}
 
-\item{...}{Any columns you would like to group the data by when aggregating}
+\item{...}{Any columns you would like to group the data by when aggregating.}
 }
 \value{
-A data frame containing the weighted mean for each group of data calculated
+A data frame containing the weighted mean for each group of data calculated.
 }
 \description{
 Takes a dataframe and calculates a weighted mean based on a chosen denominator and numerator column.
