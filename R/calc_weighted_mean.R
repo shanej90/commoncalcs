@@ -4,10 +4,10 @@
 #'
 #' @param data The data frame/table holding the information you'd like to calculate a weighted mean for
 #' @param numerator_col Value field that when aggregated will be the numerator in the calculation to work out weighted mean
-#' @param denominator_col Value field that when aggregated will be the denominator in the calculation to work out a weighted mean
-#' @param multiplier A figure to divide your end result by if your prior processing involves counting your denominator multiple times
-#' @param ... Any columns you would like to group the data by when aggregating
-#' @return A data frame containing the weighted mean for each group of data calculated
+#' @param denominator_col Value field that when aggregated will be the denominator in the calculation to work out a weighted mean.
+#' @param multiplier A figure to divide your denominator by if your processing involves counting it multiple times.
+#' @param ... Any columns you would like to group the data by when aggregating.
+#' @return A data frame containing the weighted mean for each group of data calculated.
 #' @importFrom rlang :=
 #' @export
 

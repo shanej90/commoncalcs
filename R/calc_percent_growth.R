@@ -54,10 +54,10 @@ calc_percent_growth <- function(
   } else {
 
     data %>%
-      #make sure year factors are right
-      dplyr::mutate({{period_col}} := factor({{period_col}}, c(start_period, end_period))) %>%
       #filter
       dplyr::filter({{period_col}} %in% c(start_period, end_period)) %>%
+      #make sure year factors are right
+      dplyr::mutate({{period_col}} := factor({{period_col}}, c(start_period, end_period))) %>%
       #arrange
       dplyr::arrange({{period_col}}) %>%
       #group
