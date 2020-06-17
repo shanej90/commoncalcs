@@ -33,7 +33,7 @@ devtools::install_github("shanej90/commoncalcs")
   - `calc_percent_growth()`, which enables you to calculate either
     absolute or averaged per period growth over a user-defined number of
     periods.
-  - `calc_weighted_means()`, which will produce a weighted mean for
+  - `calc_weighted_mean()`, which will produce a weighted mean for
     variable groupings of your choice.
   - `profile_over_time()`, which will profile numbers over a specified
     period of time. The most obvious use case of this is to spread the
