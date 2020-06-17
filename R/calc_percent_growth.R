@@ -60,7 +60,11 @@ calc_percent_growth <- function(
       dplyr::mutate({{period_col}} := factor({{period_col}}, c(start_period, end_period))) %>%
       #arrange
       dplyr::arrange({{period_col}}) %>%
-      #group
+      #sum figures
+      dplyr::group_by({{period_col}}, ...) %>%
+      dplyr::summarise({{value_col}} := sum({{value_col}}, na.rm = T)) %>%
+      dplyr::ungroup() %>%
+      #group for working out first/last period
       dplyr::group_by(...) %>%
       #work out absolute percentage change
       dplyr::mutate(
