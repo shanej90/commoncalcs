@@ -57,7 +57,7 @@ calc_percent_growth <- function(
       #filter
       dplyr::filter({{period_col}} %in% c(start_period, end_period)) %>%
       #make sure year factors are right
-      dplyr::mutate({{period_col}} := factor({{period_col}}, c(start_period, end_period))) %>%
+      dplyr::mutate({{period_col}} := factor({{period_col}}, levels = c(start_period, end_period))) %>%
       #arrange
       dplyr::arrange({{period_col}}) %>%
       #sum figures
@@ -75,7 +75,7 @@ calc_percent_growth <- function(
       #only include data for start_yr
       dplyr::filter({{period_col}} == start_period) %>%
       #remove intermiedate calculation column
-      dplyr::select(-last_over_first)
+      dplyr::select(..., percent_change)
 
   }
 
