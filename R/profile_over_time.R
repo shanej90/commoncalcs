@@ -1,6 +1,6 @@
 #' Create a 'straight-line' profile of a value over its associated lifetime, split up into user-defined periods.
 #'
-#' Can take a value associated with an item and spreads the value over the item's lifetime. One example would be profiling income/expenditure using the total value of a five year contract.
+#' Can take a value associated with an item and spreads the value over the item's lifetime. One example would be profiling income/expenditure using the total value of a five year contract. Note the function is a little 'blunt' and for entries that start/end midway through a period the data won't be perfectly allocated and the sum of the profiled value may differ slightly from the actual total.
 #'
 #' @param df Dataframe holding the data you would like to perform the calculation for.
 #' @param begin_col Column containing information about the begin date for the item you're interested in. Must be in date format. Will be renamed 'start_date' during processing.
@@ -154,7 +154,7 @@ profile_over_time <- function(df, begin_col, end_col, period_start, period_end, 
     dplyr::mutate(
       duration = as.numeric(end_date - start_date) + 1,
       duration = ifelse(duration == 0, 1, duration),
-      profiled_value = {{value_col}} / duration,
+      profiled_value = {{value_col}} / (duration + 1),
       interval = period_breaks
     ) %>%
     dplyr::select(day, day_name, date, ..., start_date, end_date, {{value_col}}, duration, profiled_value, interval)
@@ -162,7 +162,7 @@ profile_over_time <- function(df, begin_col, end_col, period_start, period_end, 
     sql_df %>%
     dplyr::mutate(
       duration = (as.numeric(end_date - start_date) + 1) / 7,
-      duration = ifelse(duration == 0, 1, duration),
+      duration = ifelse(duration == 0, 1, (duration + 1)),
       profiled_value = {{value_col}} / duration,
       interval = period_breaks
     ) %>%
@@ -172,7 +172,7 @@ profile_over_time <- function(df, begin_col, end_col, period_start, period_end, 
     dplyr::mutate(
       duration = lubridate::interval(start_date, end_date) %/% months(1),
       duration = ifelse(duration == 0, 1, duration),
-      profiled_value = {{value_col}} / duration,
+      profiled_value = {{value_col}} / (duration + 1),
       interval = period_breaks
     ) %>%
     dplyr::select(year, month, month_start, month_end, ..., start_date, end_date, {{value_col}}, duration, profiled_value, interval)
@@ -181,7 +181,7 @@ profile_over_time <- function(df, begin_col, end_col, period_start, period_end, 
     dplyr::mutate(
       duration = lubridate::interval(start_date, end_date) %/% months(3),
       duration = ifelse(duration == 0, 1, duration),
-      profiled_value = {{value_col}} / duration,
+      profiled_value = {{value_col}} / (duration + 1),
       interval = period_breaks
     ) %>%
     dplyr::select(year, quarter, quarter_start, quarter_end, ..., start_date, end_date, {{value_col}}, duration, profiled_value, interval)
@@ -190,7 +190,7 @@ profile_over_time <- function(df, begin_col, end_col, period_start, period_end, 
     dplyr::mutate(
       duration = lubridate::interval(start_date, end_date) %/% months(12),
       duration = ifelse(duration == 0, 1, duration),
-      profiled_value = {{value_col}} / duration,
+      profiled_value = {{value_col}} / (duration + 1),
       interval = period_breaks
     ) %>%
     dplyr::select(year, year_start, year_end, ..., start_date, end_date, {{value_col}}, duration, profiled_value, interval)
